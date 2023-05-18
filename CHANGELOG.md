@@ -1,3 +1,8 @@
+## 1.7.0-kthecoder
+
+- Update to flutter 3
+- Merge updates from original
+
 ## 1.6.9
 
 - Update dependencies
@@ -6,6 +11,7 @@
 
 - Downgrade `intl` to make it compatible with latest Flutter
 - Add `autofocus` to the `InputOptions`. Thanks @josefwilhelm for the PR!
+- Upgrade Intl
 
 ## 1.6.7
 
