@@ -97,6 +97,7 @@ class Chat extends StatefulWidget {
     this.userAgent,
     this.useTopSafeAreaInset,
     this.videoMessageBuilder,
+    required this.headerRowWidgets,
   });
 
   /// See [Message.audioMessageBuilder].
@@ -317,6 +318,8 @@ class Chat extends StatefulWidget {
   /// See [Message.videoMessageBuilder].
   final Widget Function(types.VideoMessage, {required int messageWidth})?
       videoMessageBuilder;
+
+  final List<Widget> headerRowWidgets;
 
   @override
   State<Chat> createState() => ChatState();
@@ -577,6 +580,11 @@ class ChatState extends State<Chat> {
                   color: widget.theme.backgroundColor,
                   child: Column(
                     children: [
+                      SafeArea(
+                        child: Row(
+                          children: widget.headerRowWidgets,
+                        ),
+                      ),
                       Flexible(
                         child: widget.messages.isEmpty
                             ? SizedBox.expand(
@@ -632,7 +640,6 @@ class ChatState extends State<Chat> {
                 if (_isImageViewVisible)
                   ImageGallery(
                     imageHeaders: widget.imageHeaders,
-                    imageProviderBuilder: widget.imageProviderBuilder,
                     images: _gallery,
                     pageController: _galleryPageController!,
                     onClosePressed: _onCloseGalleryPressed,

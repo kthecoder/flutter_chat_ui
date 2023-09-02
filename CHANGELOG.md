@@ -18,6 +18,11 @@
 - Add Finnish localization. Thanks @tuoku for the PR!
 - Update dependencies. Requires Dart >= 2.19.0.
 
+## 1.6.7-kthecoder
+
+- Add `headerRowWidgets` to the `Chat` class; for the ability to insert a back button and header information.
+- Example updated to show changes and more closely integrate with the theme by modifying the input field area.
+
 ## 1.6.6
 
 - Add `audioMessageBuilder` (no default implementation yet). Thanks @marinkobabic for the PR!

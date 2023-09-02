@@ -40,11 +40,102 @@ class _ChatPageState extends State<ChatPage> {
     id: '82091008-a484-4a89-ae75-a22bf8d6f3ac',
   );
 
+  List<Widget> headerRowWidgets = [
+    IconButton(
+      onPressed: () {},
+      icon: Icon(Icons.arrow_back),
+    ),
+    CircleAvatar(),
+    SizedBox(
+      width: 8.0,
+    ),
+    Text('Jessica'),
+  ];
+
+  int numLines = 0;
+
   @override
   void initState() {
     super.initState();
+    numLines;
     _loadMessages();
   }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        body: Chat(
+          messages: _messages,
+          onAttachmentPressed: _handleAttachmentPressed,
+          onMessageTap: _handleMessageTap,
+          onPreviewDataFetched: _handlePreviewDataFetched,
+          onSendPressed: _handleSendPressed,
+          showUserAvatars: true,
+          showUserNames: true,
+          user: _user,
+          inputOptions: InputOptions(
+            onTextChanged: (textString) {
+              setState(() {
+                numLines = '\n'.allMatches(textString).length + 1;
+              });
+            },
+          ),
+          theme: DefaultChatTheme(
+            sendButtonIcon: Icon(Icons.send),
+            inputBorderRadius: BorderRadius.zero,
+            inputBackgroundColor: Colors.transparent,
+            inputTextCursorColor: Colors.black,
+            inputTextColor: Colors.black,
+            inputPadding:
+                EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
+            inputTextStyle: TextStyle(height: 1.3),
+            inputTextDecoration: InputDecoration(
+              fillColor: Colors.greenAccent[800],
+              filled: true,
+              contentPadding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * 0.04,
+                numLines == 1 || numLines == 0
+                    ? MediaQuery.of(context).size.height * 0.001
+                    : MediaQuery.of(context).size.height * 0.0095,
+                MediaQuery.of(context).size.width * 0.04,
+                numLines == 1 || numLines == 0
+                    ? MediaQuery.of(context).size.height * 0.001
+                    : MediaQuery.of(context).size.height * 0.0095,
+              ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    numLines == 1 || numLines == 0 ? 50.0 : 20.0,
+                  ),
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    numLines == 1 || numLines == 0 ? 50.0 : 20.0,
+                  ),
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    numLines == 1 || numLines == 0 ? 50.0 : 20.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          headerRowWidgets: headerRowWidgets,
+        ),
+      );
 
   void _addMessage(types.Message message) {
     setState(() {
@@ -221,18 +312,4 @@ class _ChatPageState extends State<ChatPage> {
       _messages = messages;
     });
   }
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Chat(
-          messages: _messages,
-          onAttachmentPressed: _handleAttachmentPressed,
-          onMessageTap: _handleMessageTap,
-          onPreviewDataFetched: _handlePreviewDataFetched,
-          onSendPressed: _handleSendPressed,
-          showUserAvatars: true,
-          showUserNames: true,
-          user: _user,
-        ),
-      );
 }
